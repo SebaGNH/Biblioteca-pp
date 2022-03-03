@@ -1,4 +1,5 @@
-public class Prestamo {    
+public class Prestamo {
+
     private String nombreSolicitante;
     private int cantDiasPrestamo;
     private boolean fueDevuelto;
@@ -36,8 +37,6 @@ public class Prestamo {
         }
         return ", no fue devuelto.";
     }
-
-
 
     @Override
     public String toString(){

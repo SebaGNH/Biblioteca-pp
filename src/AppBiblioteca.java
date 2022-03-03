@@ -1,8 +1,7 @@
 
 import java.util.Scanner;
 
-
-public class App {
+public class AppBiblioteca {
     
     public static void main(String[] args) throws Exception{
         
@@ -22,21 +21,29 @@ public class App {
             System.out.println("Ingrese 1 si esta Disponible, 2 si esta Prestado o 3 si se encuentra extraviado");
             int estado = sc.nextInt();
 
-            System.out.println("Ingrese el nombre del solicitante");
-            String nombreSolicitante = sc.next();
+            System.out.println("Ingrese cantidad de prestamos");
+            int cantPrest = sc.nextInt();
 
-            System.out.println("Ingrese la cantidad de dias que sera prestado");
-            int cantDiasPrestamo = sc.nextInt();
+            Libro libro = new Libro(titulo, precioReposicion, estado, cantPrest);
 
-            System.out.println("Ingrese 1 si es que fue devuelto o 2 si es que todavia no fue devuelto");
-            int devuelto = sc.nextInt();
-            boolean fueDevuelto = false;
-            if (devuelto == 1) {
-                fueDevuelto = true;
-            }
+            for (int j = 0; j < cantPrest; j++) {
+                System.out.println("Ingrese el nombre del solicitante");
+                String nombreSolicitante = sc.next();
+    
+                System.out.println("Ingrese la cantidad de dias que sera prestado");
+                int cantDiasPrestamo = sc.nextInt();
 
-            Prestamo prestamo = new Prestamo(nombreSolicitante, cantDiasPrestamo, fueDevuelto);
-            Libro libro = new Libro(titulo, precioReposicion, estado, prestamo);
+                System.out.println("Ingrese 1 si es que fue devuelto o 2 si es que todavia no fue devuelto");
+                int devuelto = sc.nextInt();
+                boolean fueDevuelto = false;
+                    if (devuelto == 1) {
+                        fueDevuelto = true;
+                    }
+                
+                Prestamo prestamo = new Prestamo(nombreSolicitante, cantDiasPrestamo, fueDevuelto);
+
+                libro.agregarPrestamo(prestamo);
+            }             
             biblioteca.agregarLibro(libro); 
         }
         

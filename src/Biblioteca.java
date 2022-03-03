@@ -13,6 +13,8 @@ public class Biblioteca {
             }
         }
     }
+
+    //Cantidad de libros en cada estado (tres totales)
     public String getCantLibrosPorEstado(){
         int disponible = 0;
         int prestado = 0;
@@ -31,6 +33,7 @@ public class Biblioteca {
         return "disponibles: "+ disponible + ", prestado: "+ prestado+ ", extraviado: "+ extraviado;
     }
 
+    //Sumatoria del precio de reposición de todos los libros extraviados
     public float getPrecioReposicionExtraviados(){
         float sumaPrecioExtraviados = 0f;
         for (Libro libro : libros) {
@@ -41,37 +44,29 @@ public class Biblioteca {
         return sumaPrecioExtraviados;
     }
 
-    public String getNombreSolicitantesPorNombreLibro(String nombreLibro){
-        String nombreSolicitantes = "";
-        for (Libro libro : libros) {
-            if(libro !=null && libro.gettitulo() == nombreLibro){
-                nombreSolicitantes += libro.getprestamo().getnombreSolicitante()+ "\n";
-            }
-        }
-        return nombreSolicitantes;
-    }
-
+    //Nombre de todos los solicitantes de un libro en particular identificadopor su título
     public String getNombreSolicitantes(String titulo){
         String nombreSolicitantes = "";
         for (Libro libro : libros) {
-            if (libro !=null && libro.gettitulo() == titulo) {
-                nombreSolicitantes += "\n" + libro.getprestamo().getnombreSolicitante();
+            if (libro !=null && libro.gettitulo().equals(titulo)) {
+                nombreSolicitantes += libro.getListadoPersonas();
             }
         }
         return nombreSolicitantes;
     }
 
+    //Promedio de veces que fueron prestados los libros de la biblioteca. 
+    //Es decir, se debe responder a la consulta de cuántas veces es prestado en promedio cada libro
     public float getPromedioLibroPrestado(){
-        float cantLibrosPrestados = 0f;
-        int cantTotalLibros =0;
+        float acumulador = 0f;
+        float contador = 0f;
         for (Libro libro : libros) {
             if (libro!=null) {
-                if (libro.getElEstado() == "prestado") {
-                    cantLibrosPrestados ++;
-                } 
-                cantTotalLibros ++;
+                contador ++;
+                acumulador += libro.getCantPrestamos(); 
+                
             }
         }
-        return (cantTotalLibros * cantLibrosPrestados) / 100; 
+        return acumulador / contador;
     } 
 }

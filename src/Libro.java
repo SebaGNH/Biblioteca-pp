@@ -1,8 +1,9 @@
-public class Libro {    
+public class Libro {
+
     private String titulo;
     private float precioReposicion;
     private int estado; //(1: disponible, 2: prestado, 3: extraviado)
-    private Prestamo prestamo;
+    private Prestamo [] prestamo;
 
     public void settitulo (String titulo) {
         this.titulo = titulo;
@@ -25,29 +26,35 @@ public class Libro {
         return estado;
     }
 
-    public void setprestamo (Prestamo prestamo) {
+    public void setprestamo (Prestamo[] prestamo) {
         this.prestamo = prestamo;
     }
-    public Prestamo getprestamo () {
+    public Prestamo[] getprestamo () {
         return prestamo;
     }
-
-    public String getElEstado(){
-        if (getestado() == 1) {
-            return "disponible";
-        }else if(getestado() == 2){
-            return "prestado";
-        }else if(getestado() == 3){
-            return "extraviado";
-        }
-        return "no esta cargada esta informacion";
-    }
-
-    public Libro(String titulo, float precioReposicion, int estado, Prestamo prestamo){
+    
+    public Libro(String titulo, float precioReposicion, int estado, int cantPrestamos){
         this.titulo = titulo;
         this.precioReposicion = precioReposicion;
         this.estado = estado;
-        this.prestamo = prestamo;
+        this.prestamo = new Prestamo[cantPrestamos];
+    }
+    
+    
+    @Override
+    public String toString(){
+        return "Libro Titulo: "+ this.titulo+", precio de reposicion: "+ this.precioReposicion+ ", estado: "+ getElEstado() + prestamo.toString();
+    }
+
+    public String getElEstado(){
+        if (this.estado == 1) {
+            return "disponible";
+        }else if(this.estado == 2){
+            return "prestado";
+        }else if(this.estado == 3){
+            return "extraviado";
+        }
+        return "no esta cargada esta informacion";
     }
 
     public float getPrecioReposicion(){
@@ -58,8 +65,33 @@ public class Libro {
         return acumuladorPrecio;
     }
 
-    @Override
-    public String toString(){
-        return "Libro Titulo: "+ this.titulo+", precio de reposicion: "+ this.precioReposicion+ ", estado: "+ getElEstado() + prestamo.toString();
+    public void agregarPrestamo(Prestamo p){
+        for (int i = 0; i < prestamo.length; i++) {
+            if (prestamo[i] == null) {
+                prestamo[i] = p;
+                break;
+            }
+        }
     }
+
+    public String getListadoPersonas(){
+        String mensaje = "";
+        for (Prestamo presta : prestamo) {
+            if(presta != null){
+                mensaje = presta.getnombreSolicitante() + "\n";
+            }
+        }
+        return mensaje;
+    }
+
+    public int getCantPrestamos(){
+        int contador = 0;
+        for (Prestamo presta : prestamo) {
+            if(presta!= null){
+                contador ++;
+            }
+        }
+        return contador;
+    }
+
 }
